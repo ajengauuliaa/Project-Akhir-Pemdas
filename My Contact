@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Kontak {
+    private String nama;
+    private String nomorTelepon;
+
+    public Kontak(String nama, String nomorTelepon) {
+        this.nama = nama;
+        this.nomorTelepon = nomorTelepon;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+    
+    public String getNomorTelepon() {
+        return nomorTelepon;
+    }
+
+    @Override
+    public String toString() {
+        return "Nama: " + nama + ", Nomor Telepon: " + nomorTelepon;
+    }
+}
+
+public class MyContact {
+    private ArrayList<Kontak> kontakList;
+
+    public MyContact() {
+        kontakList = new ArrayList<>();
+    }
+
+    public void tambahKontak(String nama, String nomorTelepon) {
+        Kontak kontak = new Kontak(nama, nomorTelepon);
+        kontakList.add(kontak);
+        System.out.println("Kontak berhasil ditambahkan.");
+    }
+
+    public void tampilkanKontak() {
+        if (kontakList.isEmpty()) {
+            System.out.println("Tidak ada kontak yang tersedia.");
+        } else {
+            for (Kontak kontak : kontakList) {
+                System.out.println(kontak);
+            }
+        }
+    }
+
+    public void hapusKontak(String nama) {
+        for (int i = 0; i < kontakList.size(); i++) {
+            if (kontakList.get(i).getNama().equalsIgnoreCase(nama)) {
+                kontakList.remove(i);
+                System.out.println("Kontak berhasil dihapus.");
+                return;
+            }
+        }
+        System.out.println("Kontak tidak ditemukan.");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        MyContact bukuKontak = new MyContact(); // Perbaiki instansiasi objek
+        int pilihan;
+
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Tambah Kontak");
+            System.out.println("2. Tampilkan Kontak");
+            System.out.println("3. Hapus Kontak");
+            System.out.println("4. Keluar");
+            System.out.print("Pilih opsi: ");
+            pilihan = scanner.nextInt();
+            scanner.nextLine(); // membersihkan newline
+
+            switch (pilihan) {
+                case 1:
+                    System.out.print("Masukkan nama: ");
+                    String nama = scanner.nextLine();
+                    System.out.print("Masukkan nomor telepon: ");
+                    String nomorTelepon = scanner.nextLine();
+                    bukuKontak.tambahKontak(nama, nomorTelepon);
+                    break;
+                case 2:
+                    bukuKontak.tampilkanKontak();
+                    break;
+                case 3:
+                    System.out.print("Masukkan nama kontak yang ingin dihapus: ");
+                    String namaHapus = scanner.nextLine();
+                    bukuKontak.hapusKontak(namaHapus);
+                    break;
+                case 4:
+                    System.out.println("Keluar dari aplikasi.");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+            }
+        } while (pilihan != 4);
+
+        scanner.close();
+    }
+}
